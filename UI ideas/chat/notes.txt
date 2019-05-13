@@ -1,0 +1,120 @@
+Features:
+    - Profiles:
+        - Name
+        - Email
+        - Auth:
+            - Basic
+                - Password Reset
+            - Oauth
+            - Oauth 2
+            - Single login token
+        - Remember me
+        - School
+        - Grade
+        - Classes
+        - Direct Messaging
+    
+    - Study groups
+        - Chat/Video call
+            - Add
+            - Video call
+                - Mute
+                - Hang up
+                - Disable camera
+                - File view/edit
+                - Share screen
+            - Chat
+                - Messages
+                - Images
+                - Links
+        - Shared Files
+            - Types:
+                - Uploads
+                - Images
+                - Video
+                - Sites
+
+                - Rich Text
+                - Draw space
+                - Graphing calculator
+            - Create
+            - Delete
+            - Rename
+            - Bookmarks
+            - Folders
+        - Sources
+            - Handle and cite sources
+        - Lessons
+        - Flashcards:
+            - Create Flashcards
+            - Study Flashcards
+            - Quiz yourself
+    - Subjects
+        - Lessons (KhanAcademy) 
+        - Lesson Plans
+        - Public Groups tagged liek the subject
+    - Lessons
+        - Document
+        - Website
+        - KhanAcademy
+
+    
+Views:
+    * Partials:
+        - Navbar
+        - Footer
+
+    Pages:
+        - Home page
+            * Jumbotron/Call to action
+
+            * About us / About it
+            * Features
+
+            * Join group
+            * Create group
+            * View Subjects
+        - My Profile
+            * Join Group
+            * Create Group
+
+            * Bookmarked Subjects
+            * Bookmarked Lessons
+            * Bookmarked Groups
+
+            * Reminders, Notifications, Calendar
+            * My Groups
+            * Chats
+        - Create study group:
+            - Name
+            - Privacy (Public, Private, Unlisted) (Public: Read only)
+            - Type
+            - Invite
+
+        - List study groups:
+            - View subjects
+            - View Groups:
+                - Group name
+                - Creator
+                - Tags
+        - Subject:
+            - Lessons
+            - Lesson Plans
+            - Study groups
+        - Lesson:
+            - Website in iframe
+        - Study group:
+            - Communications
+                - Chat / Videocall
+
+            - Shared:
+                - File upload
+                - Whiteboard, WYSIWYG, and Graphing calculator
+                - Sources
+                - Attach relevant Khan Academy content (and other reference materials like free online textbooks) 
+                - Class calendar
+
+            - Self:
+                - Wolfram alpha
+                - Flashcards / Quizzes
+

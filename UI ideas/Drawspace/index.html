@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <style>
+        canvas{
+            width: 500px;
+            height: 500px;
+        }
+    </style>
+    <canvas id="canvas" style="cursor: crosshair"></canvas>
+    <script>
+        // let a = document.getElementById("canvas");
+        class Canvas {
+            constructor(c){
+                this.canvas = c;
+                this.ctx = c.getContext('2d');
+                this.ctx.strokeStyle = "#000";
+
+                this.emitter = {
+                    emit: () => {},
+                } 
+
+                this.tools = {};
+                this.buttons = [];
+
+                this.tool = null;
+                
+                this.history = [];
+                this.redoList = [];
+
+                this.init();
+            }
+
+            //* Lifecycle/Events
+            init(){
+                this.canvas.width = this.canvas.offsetWidth;
+                this.canvas.height = this.canvas.offsetHeight;
+
+                this.canvas.addEventListener("mousedown", this.penDown.bind(this));
+                this.canvas.addEventListener("mouseup", this.penUp.bind(this));
+                this.canvas.addEventListener("mousemove", this.penMove.bind(this));
+                // this.canvas.addEventListener("keypress", this.keyPress);
+            }
+            penDown(evt){
+                console.log(evt, this.tool);
+                if(this.tool){
+                    let tool = this.tools[this.tool]
+                    var rect = canvas.getBoundingClientRect();
+                    tool.down = true;
+                    tool.penDown({
+                        x: evt.clientX - rect.left,
+                        y: evt.clientY - rect.top
+                    });
+                }
+            }
+            penUp(evt){
+                if(this.tool){
+                    let tool = this.tools[this.tool]
+                    var rect = canvas.getBoundingClientRect();
+                    tool.down = false;
+                    this.history.push({
+                        tool: this.tool,
+                        action: tool.penUp({
+                            x: evt.clientX - rect.left,
+                            y: evt.clientY - rect.top
+                        }),
+                    });
+                }
+            }
+            penMove(evt){
+                if(this.tool && this.tools[this.tool].down){
+                    let tool = this.tools[this.tool]
+                    var rect = canvas.getBoundingClientRect();
+                    tool.penMove({
+                        x: evt.clientX - rect.left,
+                        y: evt.clientY - rect.top
+                    });
+                }
+            }
+
+            //* Configuration/Extension
+            addTool(t){
+                t = new t(this);
+                this.tools[t.name] = t;
+                if(this.tool === null) this.tool = t.name;
+                console.log(t.name, this.tool);
+            }
+
+            button(button){
+                this.buttons.push(button);
+            }
+
+            //* Commands
+            select(t){
+                if(this.tools[t]) this.tool = t;
+            }
+
+            renderHistory(i){
+                this.history.forEach(({tool, action}) => this.tools[tool].render(action));
+            }
+
+            undo(){
+                if(this.history.length > 0){
+                    this.redoList.push(this.history.pop());
+                    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+                    this.renderHistory();
+                }
+            }
+
+            redo(){
+                if(this.redoList.length > 0){
+                    let tool, action;
+                    this.history.push({tool, action} = this.redoList.pop());
+                    this.tools[tool].render(action);
+                }
+            }
+        }
+
+        class Tool{
+            constructor(name, canvas){
+                this.name = name;
+                this.canvas = canvas;
+                this.down = false;
+            }
+
+            // serialize(){}
+            render(){}
+
+            penDown(){}
+            penUp(){}
+            penMove(){}
+        }
+
+        class Pen extends Tool {
+            constructor(canvas){
+                super("pen", canvas);
+                this.points = []; 
+                this.movePoint = (x1, y1, x2, y2, scale=.15) => [x1+(x2-x1)*scale, y1+(y2-y1)*scale];
+            }
+
+            render(data) {
+                this.canvas.ctx.beginPath();
+                this.canvas.ctx.moveTo(...data[0]);
+                data.slice(1).forEach((v, i) => this.canvas.ctx.lineTo(...v));
+                this.canvas.ctx.stroke();
+            }
+
+            penDown({x, y}){
+                this.points = [[x, y]];
+                this.canvas.ctx.strokeRect(x, y, 1, 1);
+            }
+            penMove({x, y}){
+                let prev = this.points[this.points.length-1]
+                let ctx = this.canvas.ctx;
+
+                [x, y] = this.movePoint(...prev, x, y);
+                ctx.beginPath();
+                ctx.moveTo(...prev);
+                ctx.lineTo(x, y);
+                ctx.stroke();
+                this.points.push([x, y]);
+            }
+            penUp(){
+                let p = this.points;
+                this.points = [];
+                return p;
+            }
+        }
+
+        let c = new Canvas(document.getElementById("canvas"));
+        console.log(c, Pen);
+        c.addTool(Pen);
+
+    
+    </script>
+</body>
+</html>

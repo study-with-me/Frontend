@@ -1,0 +1,146 @@
+// $navbar-height: 3em;
+*{
+    font-family: Roboto, sans-serif;
+    box-sizing: border-box;
+    margin: 0px;
+    padding: 0px;
+}
+.navbar{
+    position: fixed;
+    top: 0px;
+    display: flex;
+    height: 3em;
+    width: 100%;
+    justify-content: space-between;
+    font-size: 1.25em;
+    padding: 0em 5em;
+    z-index: 3;
+    color: white;
+    background-color: #555;
+    opacity: 0.5;
+
+    .logo {
+        padding: 1rem;
+    }
+
+    .links{
+        display: flex;
+        .link{
+            padding: 1rem;
+        }
+    }
+}
+.jumbotron{
+    position: relative;
+    height: 95vh;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .jumbotron-title{
+        font-size: 3em;
+    }
+
+    *{
+        position: relative;
+    }
+
+    &::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: url("https://www.toolwire.com/wp-content/uploads/2017/03/studying-on-computer.jpg");
+        background-repeat: no-repeat;
+        background-size: cover;
+        filter: brightness(0.5);
+    }
+}
+
+.about-block{
+    margin-bottom: 3em;
+    .about-title{
+        text-align: center;
+        padding: 3rem;
+        padding-bottom: 0em;
+        font-size: 3em;
+        font-weight: 100;
+    }
+    .about-people{
+        display: flex;
+    }
+
+    .person{
+        margin: 6vw;
+        margin-top: 1em;
+        img{
+            width: 75%;
+            margin: 12.5%;
+            clip-path: circle(50% at 50% 50%);
+        }
+        .description{
+            text-align: justify;
+            font-size: 1.5em;
+            font-weight: 300;
+        }
+    }
+
+    &>.description{
+        width: 75%;
+        margin: auto;
+        font-size: 3em;
+        font-weight: 100;
+    }
+}
+
+.feature-block {
+    margin-bottom: 1em;
+    background-color: #eee;
+
+    .features-title {
+        text-align: center;
+        padding: 3rem;
+        // padding-bottom: 0em;
+        font-size: 3em;
+        font-weight: 100;
+    }
+
+    .features {
+        display: flex;
+    }
+
+    .feature {
+        margin: 3vw;
+        margin-top: 1em;
+
+        flex-basis: 25%;
+
+        .title{
+            text-align: center;
+            font-size: 1.25em;
+            font-weight: bold;
+            padding: 1em;
+        }
+
+        img {
+            height: 10%;
+            margin: 12.5%;
+        }
+
+        .description {
+            text-align: justify;
+            font-size: 1.5em;
+            font-weight: 300;
+        }
+    }
+
+    &>.description {
+        width: 75%;
+        margin: auto;
+        font-size: 3em;
+        font-weight: 100;
+    }
+}

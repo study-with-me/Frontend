@@ -1,0 +1,1 @@
+node-sass --watch ./home.scss --output ./
