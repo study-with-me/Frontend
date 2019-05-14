@@ -14,90 +14,142 @@
 html,
 body {
   height: 100%;
-  overflow: hidden;
+  // overflow: hidden;
+}
+.content{
+  height: 100vh;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 20% auto;
+  grid-template-rows: 10% auto 8%;
+  grid-template-areas:
+    "sidebar header"
+    "sidebar messages"
+    "sidebar input"
 }
 
-.video{
-  width: 100%;
-  height: 100vh;
-  background-color: #000;
+.sidebar{
+  grid-area: sidebar;
+    overflow-y: auto;
+  
+  .chats{
+    // height: 100%;
+    overflow-y: auto;
+    width: inherit;
 
+    .chat{
+      padding: 1em 2em;
+      max-width: inherit;
+
+      .chat-title{
+        font-weight: bold;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      .chat-last-msg{
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      &:hover{
+        background-color: #ddd;
+        cursor: pointer;
+      }
+    }
+    // overflow-x: n
+  }
+  &::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.15);
+    background-color: #F5F5F5;
+  }
+
+  &::-webkit-scrollbar {
+    width: 12px;
+    background-color: #F5F5F5;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.15);
+    background-color: #ccc;
+  }
+  
+  .profile{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #eee;
+    .profile-pic{
+      width: 30%;
+      margin: 2em auto;
+      clip-path: circle(50% at 50% 50%);
+    }
+  }
+}
+.messages{
+  background-color: #eee;
+  grid-area: messages; 
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items:flex-start;
-  align-content:flex-start;
-  img {
-    width: 100%;
-    // height: 100%;
+  padding: 1em;
+  .message{
+    max-width: 40%;
+    padding: 1em;
+    background-color: lightblue;
+    border-color: lightblue;
+    border-radius: 15px;
+    margin: 0.5em;
+    position: relative;
+    &:after{
+      content: "";
+      position: absolute;
+      width: 0;
+      height: 0;
+      border: 12px solid;
+      bottom: 0px;
+    }
+    &.incoming{
+      align-self: flex-start;
+      &:after{
+        left: -12px;
+        border-color: transparent lightblue lightblue transparent;
+      }
+    }
+    &.outgoing{
+      align-self: flex-end;
+      &:after {
+        right: -12px;
+        border-color: transparent transparent lightblue lightblue;
+      }
+    }
+  }
+  .info{
+    font-size: 0.8em;
+    align-self: center;
+    margin: 0.5em;
   }
 }
+.input{
+  grid-area: input; 
+  display: flex;
 
-.icons {
-  position: absolute;
-  z-index: 2;
-  bottom: 0px;
-  padding: 1em;
-  width: 100%;
-  left: 0px;
+  .text-input{
+    flex-grow: 1;
+    padding: 1.5rem;
+    font-size: 1em;
+    vertical-align: baseline;
+
+    outline: none;
+    border: none;
+  }
+}
+.header{
+  grid-area: header;
   display: flex;
   justify-content: center;
+  align-items: center;
 
-  .icon{
-    margin: 1rem;
-    min-width: 5rem;
-    min-height: 5rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 50%;
-    box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.75);
-    color: white;
-    font-size: 1.5em;
-    cursor: pointer;
-    
-    &.hang-up{
-      background-color: #f00;
-    }
-    &.mute{
-      background-color: #888;
-    }
-    &.disable-camera{
-      background-color: #888;
-    }
-  }
-}
-.fa.fa-camera{
-  position: relative;
-  &:after {
-    position: absolute;
-    content: "/";
-    color: white;
-    font-weight: bold;
-    font-size: 1.75em;
-    left: 0;
-    top: -3px;
-    // text-shadow: -3px 0px 0px rgba(0, 0, 0, 1);
-    line-height: 32px;
-    left: 30%;
-    font-family: Arial;
-    z-index: 4;
-  }
-}
-
-.callers{
-  position: absolute;
-  z-index: 2;
-  top: 0px;
-  left: 0px;
-  .caller{
-    margin: 0.5em;
-    img{
-      width: 10vw;
-      height: auto;
-    }
-    background-color: #000;
-    border: 4px solid #555;
-    cursor: pointer;
-  }
+  font-size: 2em;
 }
