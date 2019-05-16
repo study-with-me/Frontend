@@ -1,0 +1,193 @@
+/*
+- Or multi call ui 
+  https://i2.wp.com/gizcrunch.com/wp-content/uploads/skype-desktop-client-latest-mac-windows_group-video-calls.png?resize=641%2C451&ssl=1
+
+*/
+
+* {
+  font-family: Roboto, sans-serif;
+  box-sizing: border-box;
+  margin: 0px;
+  padding: 0px;
+  // border: 1px solid black !important;
+}
+
+html,
+body {
+  height: 100%;
+  // overflow: hidden;
+}
+
+.content{
+  height: 100%;
+  width: 100vw;
+  display: grid;
+  grid-template-rows: 10vh auto 10vh;
+  grid-template-columns: 20vh auto;
+  grid-template-areas: 
+    "side top"
+    "side main"
+    "side bottom"
+}
+.side{
+  grid-area: side;
+  border-right: 1px solid #eee;
+  box-shadow: 0px 0px 20px -10px rgba(0, 0, 0, 0.75);
+  z-index: 3;
+
+  .profile{
+    background-color: #eee;
+
+    .img{
+      clip-path: circle(50% at 50% 50%);
+      width: 50%;
+      height: auto;
+      margin: 25% 25% 1em 25%;
+      // border: px solid red;
+      // border-radius: 50%;
+    }
+    .name{
+      padding: 0em 1em 1em 1em;
+      text-align: center;
+    }
+  }
+
+  .nav-icons{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    .nav-icon{
+      padding: 1em;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-around;
+      text-transform: uppercase;
+      cursor: pointer;
+      &:hover{
+        .fas{
+          color: blue;
+        }
+      }
+      .fas{
+        transition: color ease-in-out 0.25s;        
+        font-size: 2em;
+        color: #aaa;
+        margin-bottom: 0.5rem;
+      }
+    }
+  }
+}
+.top {
+  grid-area: top;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 2em;
+  // box-shadow: 0px 0px 20px -10px rgba(0, 0, 0, 0.75);
+  box-shadow: 0 5px 10px -10px rgba(0, 0, 0, 0.75);
+  box-shadow-left: none;
+  
+  z-index: 2;
+  
+  .logo{
+    font-size: 1.5em;
+  }
+  .group-name{
+    font-size: 2em;
+  }
+  
+  .more{
+    font-size: 1.5em;
+    cursor: pointer;
+    perspective: 10em;
+    i{
+      transition: transform ease-in 0.25s;
+      position: relative;
+      &:hover{
+        transform: translateZ(1em);
+      }
+
+    }
+  }
+}
+.bottom{
+  grid-area: bottom;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  // box-shadow: 0px 0px 20px -10px rgba(0, 0, 0, 0.75);
+  box-shadow: 0 -5px 10px -10px rgba(0, 0, 0, 0.75);
+  z-index: 2;
+
+  .link{
+    font-size: 1.25em;
+    text-transform: uppercase;
+  }
+}
+.main{
+  grid-area: main;
+  background-color: #eee;
+  min-width: 0;
+
+  .section{
+    max-width: 100%;
+    .section-title{
+      padding: 1rem 3.5rem;
+      font-size: 1.25em;
+      font-weight: bold;
+    }
+
+    &.files, &.flashcards{
+      .section-body{
+        padding-top: 1em;
+        display: flex;
+        flex-wrap: nowrap;
+        align-items: center;
+        align-content: flex-start;
+        margin: auto 2em;
+        overflow: auto;
+        max-width: 100%;
+        // box-shadow:inset 0 0 20px -12px #000000;
+        &::-webkit-scrollbar {
+          height: 1px;
+        }
+      }
+    }
+
+    &.files{
+      .file{
+        padding: 0em 2em;
+        perspective: 10em;
+        cursor: pointer;
+
+        &:hover .file-icon {
+          transform: translateZ(0.05em);
+          box-shadow: 0 0 22px -10px rgba(0, 0, 0, 0.8);
+        }
+        
+        .file-icon{
+          background-color: #fff;
+          font-size: 5em;
+          display: flex;
+          align-items: center; 
+          justify-content: center; 
+          width: 10rem;
+          height: 8rem;
+          border-radius: 1rem;
+          box-shadow: 0 0 20px -12px rgba(0, 0, 0, 0.75);
+          position: relative;
+          transition: box-shadow ease-out 0.5s, transform ease-out 0.5s;
+        }
+        .file-name{
+          padding: 1em;
+          text-align: center;
+        }
+      }
+    }
+    &.chats{
+
+    }
+  }
+}
