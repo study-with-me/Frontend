@@ -90,24 +90,30 @@ body {
   .bottom .link {
     font-size: 1.25em;
     text-transform: uppercase; }
+    .bottom .link.active {
+      color: #0074D9;
+      border-bottom: 2px solid #0074D9; }
 
 .main {
   grid-area: main;
   background-color: #eee;
-  min-width: 0; }
+  min-width: 0;
+  overflow: auto; }
   .main .section {
-    max-width: 100%; }
+    max-width: 100%;
+    margin: 0em 0em; }
     .main .section .section-title {
       padding: 1rem 3.5rem;
       font-size: 1.25em;
       font-weight: bold; }
+    .main .section .section-body {
+      padding: 2em 0em; }
     .main .section.files .section-body, .main .section.flashcards .section-body {
-      padding-top: 1em;
+      padding: 2em 4em;
       display: flex;
       flex-wrap: nowrap;
       align-items: center;
       align-content: flex-start;
-      margin: auto 2em;
       overflow: auto;
       max-width: 100%; }
       .main .section.files .section-body::-webkit-scrollbar, .main .section.flashcards .section-body::-webkit-scrollbar {
@@ -116,11 +122,13 @@ body {
       padding: 0em 2em;
       perspective: 10em;
       cursor: pointer; }
-      .main .section.files .file:hover .file-icon {
+      .main .section.files .file:hover .file-icon,
+      .main .section.files .file:focus .file-icon {
         transform: translateZ(0.05em);
         box-shadow: 0 0 22px -10px rgba(0, 0, 0, 0.8); }
       .main .section.files .file .file-icon {
         background-color: #fff;
+        color: grey;
         font-size: 5em;
         display: flex;
         align-items: center;
@@ -133,4 +141,100 @@ body {
         transition: box-shadow ease-out 0.5s, transform ease-out 0.5s; }
       .main .section.files .file .file-name {
         padding: 1em;
+        padding-bottom: 0em;
         text-align: center; }
+    .main .section.chats .section-body .chat {
+      width: 100%;
+      background-color: #fff;
+      overflow: hidden;
+      max-height: 100%;
+      cursor: pointer;
+      transition: background-color 0.25s ease-in-out;
+      border-bottom: 1px solid #ddd; }
+      .main .section.chats .section-body .chat .chat-title {
+        font-weight: bold;
+        margin: 1em 3em 0em 3em; }
+      .main .section.chats .section-body .chat .chat-last-msg {
+        margin: 0em 3em 0.25em 3em; }
+      .main .section.chats .section-body .chat .chat-respond {
+        transition: max-height 0.35s ease-in-out;
+        transition-delay: 0s;
+        height: 100%;
+        max-height: 0em;
+        padding: 0em;
+        margin: 0em; }
+        .main .section.chats .section-body .chat .chat-respond .chat-respond-input {
+          width: 100%;
+          height: 100%;
+          display: block;
+          margin: 0em;
+          margin-top: 0.5em;
+          border: none;
+          background-color: #eee;
+          padding: 0.25em 3.5em; }
+      .main .section.chats .section-body .chat:hover {
+        background-color: #f9f9f9; }
+        .main .section.chats .section-body .chat:hover .chat-respond,
+        .main .section.chats .section-body .chat:hover .chat-respond:hover,
+        .main .section.chats .section-body .chat:hover .chat-respond:focus-within {
+          max-height: 2em; }
+    .main .section.chats .section-body .chat-more {
+      background-color: #fff;
+      text-align: center;
+      padding: 0.25em;
+      cursor: pointer;
+      color: #555;
+      position: relative; }
+      .main .section.chats .section-body .chat-more .fa-arrow-right {
+        position: relative;
+        transition: left 0.25s ease-in-out;
+        left: 0px;
+        margin-left: 0.25rem;
+        font-size: 0.9em; }
+      .main .section.chats .section-body .chat-more:hover .fa-arrow-right {
+        left: 1em; }
+    .main .section.flashcards .flashcard-set {
+      perspective: 10em;
+      min-width: 10rem;
+      height: 8rem;
+      margin: 0em 1.5em;
+      position: relative;
+      cursor: pointer; }
+      .main .section.flashcards .flashcard-set:after, .main .section.flashcards .flashcard-set:before {
+        content: " ";
+        position: absolute;
+        display: inline-block;
+        min-width: 10rem;
+        height: 8rem;
+        border-radius: 1rem;
+        background-color: #fff;
+        box-shadow: 0 0 20px -12px rgba(0, 0, 0, 0.75);
+        transition: box-shadow ease-out 0.5s, transform ease-out 0.5s;
+        overflow: visible !important; }
+      .main .section.flashcards .flashcard-set:before {
+        left: 1em;
+        bottom: 1em; }
+      .main .section.flashcards .flashcard-set:after {
+        left: 0.5em;
+        bottom: 0.5em; }
+      .main .section.flashcards .flashcard-set .flash-text {
+        padding: 2em;
+        width: 100%;
+        height: 100%;
+        border-radius: 1rem;
+        background-color: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 0 20px -12px rgba(0, 0, 0, 0.75);
+        position: relative;
+        transition: transform ease-out 0.5s;
+        user-select: none;
+        z-index: 1; }
+      .main .section.flashcards .flashcard-set:hover .flash-text, .main .section.flashcards .flashcard-set:focus .flash-text {
+        transform: translateZ(0.2em); }
+      .main .section.flashcards .flashcard-set:hover:after {
+        transform: translateZ(0.2em); }
+      .main .section.flashcards .flashcard-set:hover:before {
+        box-shadow: 0 0 22px -10px rgba(0, 0, 0, 0.8);
+        transform: translateZ(0.2em); }
