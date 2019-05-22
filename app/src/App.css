@@ -1,0 +1,160 @@
+/*
+- Or multi call ui 
+*/
+* {
+  font-family: Roboto, sans-serif;
+  box-sizing: border-box;
+  margin: 0px;
+  padding: 0px;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+.content {
+  height: 100vh;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 20% auto;
+  grid-template-rows: 10% auto 8%;
+  grid-template-areas: "sidebar header"
+    "sidebar messages"
+    "sidebar input";
+}
+
+.sidebar {
+  grid-area: sidebar;
+  overflow-y: auto;
+}
+
+.sidebar .chats {
+  overflow-y: auto;
+  width: inherit;
+}
+
+.sidebar .chats .chat {
+  padding: 1em 2em;
+  max-width: inherit;
+}
+
+.sidebar .chats .chat .chat-title {
+  font-weight: bold;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.sidebar .chats .chat .chat-last-msg {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.sidebar .chats .chat:hover {
+  background-color: #ddd;
+  cursor: pointer;
+}
+
+.sidebar::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.15);
+  background-color: #F5F5F5;
+}
+
+.sidebar::-webkit-scrollbar {
+  width: 12px;
+  background-color: #F5F5F5;
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.15);
+  background-color: #ccc;
+}
+
+.sidebar .profile {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #eee;
+}
+
+.sidebar .profile .profile-pic {
+  width: 30%;
+  margin: 2em auto;
+  clip-path: circle(50% at 50% 50%);
+}
+
+.messages {
+  background-color: #eee;
+  grid-area: messages;
+  display: flex;
+  flex-direction: column;
+  padding: 1em;
+}
+
+.messages .message {
+  max-width: 40%;
+  padding: 1em;
+  background-color: lightblue;
+  border-color: lightblue;
+  border-radius: 15px;
+  margin: 0.5em;
+  position: relative;
+}
+
+.messages .message:after {
+  content: "";
+  position: absolute;
+  width: 0;
+  height: 0;
+  border: 12px solid;
+  bottom: 0px;
+}
+
+.messages .message.incoming {
+  align-self: flex-start;
+}
+
+.messages .message.incoming:after {
+  left: -12px;
+  border-color: transparent lightblue lightblue transparent;
+}
+
+.messages .message.outgoing {
+  align-self: flex-end;
+}
+
+.messages .message.outgoing:after {
+  right: -12px;
+  border-color: transparent transparent lightblue lightblue;
+}
+
+.messages .info {
+  font-size: 0.8em;
+  align-self: center;
+  margin: 0.5em;
+}
+
+.input {
+  grid-area: input;
+  display: flex;
+}
+
+.input .text-input {
+  flex-grow: 1;
+  padding: 1.5rem;
+  font-size: 1em;
+  vertical-align: baseline;
+  outline: none;
+  border: none;
+}
+
+.header {
+  grid-area: header;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2em;
+}

@@ -1,0 +1,1 @@
+export let last = arr => arr&&arr[arr.length-1];

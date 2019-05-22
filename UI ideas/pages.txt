@@ -1,0 +1,137 @@
+* Drawn designs
+@ HTML/CSS
+# React
+
+Static:
+    * Home (Hero, About, features, call to action)
+    About (About us, call to action)
+    Welcome (Welcome after sign in, go to dashboard)
+    Help:
+        Search/List
+        Page
+
+-
+
+
+Profile/Auth:
+    * Dashboard: (
+        Chats, 
+        Groups, 
+        Projects, 
+        Lessons, 
+        Tasks, 
+        Notifications, 
+        Flashcards, 
+        Bookmarks
+    )
+    * UI customization (dashboard, quicklinks)
+
+    * Signup/Signin (Modal)
+    * Reset/Change Password
+    * Computer session manager
+
+    Other profile
+    
+    * Metrics
+    * Flashcards
+    Lessons:
+        * Lessons
+        * Paths
+    
+    * Bookmarks
+    Bookmarked:
+        * Quizzes
+        * Lessons
+        * Lesson Plans
+        * Flashcards
+
+    * Notificiations
+    Notification:
+        Invite (Chat/Group)
+        Study Reminder
+        Shared File
+        Friend Request
+        ? Watch Notifications
+
+    Calendar:
+        * Calendar Month view
+        * Todo List
+        * Add calendar
+
+    * Groups
+    * Files (Group/Project files)
+
+    Projects:
+        Project list
+        My Tasks for all projects
+        My Tasks for a project
+
+Chat:
+    * Chats
+    * Start Chat
+    Chat Settings
+    * Chat
+    * Chat Gallery
+    * Video call
+
+Files:
+    File List
+    File:
+        * Folder
+        * Doc
+        * Whiteboard
+        * Presentation
+        * Calculator (No editing equations that someone is currently editing)
+
+        Share
+    * Upload
+    Categories
+Flashcards:
+    * Create/Edit Flashcard set
+    * Study flashcard
+    * Quiz flashcard
+    * Share flashchards
+Groups:
+    Create
+    List groups
+    Group settings: Share, Group roles
+    * Dashboard
+    Chat:
+        Channels
+        Chat
+    Video Call
+    Files
+    Privacy
+    Metrics
+    Flashcards
+    Project Management
+Lessons:
+    Subject
+    Lesson Plan
+    Lesson in plan
+    Lesson
+    Transcript
+    Discussion
+    Quiz
+Project Management:
+    Project Page: (Nav, todo/upcoming, calendar)
+    Roles
+    Sharing
+    Calendar
+    Notes:
+        Note List
+        Note
+    Sources:
+        Source List
+        Source Viewer
+        Source Citation maker
+    Tasks:
+        Task list
+        Task:
+            Task overview (Name, description, progress, time frame, people)
+            Pick timeframe
+            Set progress
+            Add/Remove people
+    People:
+        Roles
+        Tasks per person

@@ -1,1 +1,0 @@
-node-sass --watch ./page.scss --output ./
