@@ -27,11 +27,16 @@ body {
 .sidebar {
   grid-area: sidebar;
   overflow-y: auto;
+  display:  flex;
+  flex-direction: column;
+  justify-content: flex-start;
 }
 
 .sidebar .chats {
   overflow-y: auto;
   width: inherit;
+  position: relative;
+  flex-grow: 1;
 }
 
 .sidebar .chats .chat {
@@ -84,6 +89,23 @@ body {
   width: 30%;
   margin: 2em auto;
   clip-path: circle(50% at 50% 50%);
+}
+
+.sidebar .chat-fab{
+  color: white;
+  padding: 0em;
+  vertical-align: middle;
+  position: absolute;
+  right: 1em;
+  bottom: 1em;
+  border-radius: 100em;
+  border: none;
+  background-color: red;
+  font-size: 2rem;
+  width: 4rem;
+  height: 4rem;
+  outline: none;
+  cursor: pointer;
 }
 
 .messages {
@@ -157,4 +179,58 @@ body {
   justify-content: center;
   align-items: center;
   font-size: 2em;
+}
+
+.login-container{
+  background: rgba(0, 0, 0, 0.15);
+  position: absolute;
+}
+.login-container, .join-container{
+  display: flex;
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+}
+
+.login-tabs{
+  display: flex;
+}
+.login-tabs, .join-tabs{
+  position: relative;
+  height: 50%;
+  width: 50%;
+  min-width: 30em;
+  background-color: white;
+}
+.login-tabs div{
+  flex-grow: 1;
+  flex-basis: 0;
+  padding: 1em;
+  display: flex;
+  flex-direction: column;
+}
+.login-cover{
+  position: absolute;
+  width: 50%;
+  height: 100%;
+  transition: left 0.15s;
+  background-color: teal;
+  left: 0;
+}
+.login-cover.tab-login{
+  left: 50%;
+}
+.login-header{
+  text-transform: capitalize;
+  text-align: center;
+  padding: 1em;
+}
+.join-tabs .tabs{
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+}
+.tab-content{
+  height: 100%;
 }

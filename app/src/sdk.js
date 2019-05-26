@@ -21,58 +21,65 @@ let errors = {
     fieldMissing: () => `password or username is missing`,
 }
 export default {
-    auth: {
-        getImgUrl: () => "",
-        signupEmailPass: (email, password, rememberMe) => new Promise((resolve, reject) => {
-            const emailRegex = /^[a-zA-Z0-9\-\_]+@[a-zA-Z0-9\-\_]+.[a-zA-Z0-9\-\_]+$/;
-            
-            if(!email || !password) return reject(errors.fieldMissing());
-            if (!email.match(emailRegex)) return reject(errors.malformedEmail(email));
-            if(users.hasOwnProperty(email)) return reject(errors.userExists(email));
+  auth: {
+    getImgUrl: () => new Promise((resolve, reject) => resolve("asdf")),
+    signup: (email, password, rememberMe) =>
+      new Promise((resolve, reject) => {
+        const emailRegex = /^[a-zA-Z0-9\-\_]+@[a-zA-Z0-9\-\_]+.[a-zA-Z0-9\-\_]+$/;
 
-            users[email] = User(email, password);
-            sessions[++sessionCounter] = {
-                user: email,
-                expires: new Date + 10000, // In ten seconds
-            };
-            if (rememberMe) remember[++rememberCounter] = email;
-            resolve({
-                ...users[email],
-                session: sessionCounter,
-                remember: rememberCounter,
-            });
-        }),
-        signinEmailPass: (email, password, rememberMe) => new Promise((resolve, reject) => {
-            const emailRegex = /^[a-zA-Z0-9\-\_]+@[a-zA-Z0-9\-\_]+.[a-zA-Z0-9\-\_]+$/;
+        if (!email || !password) return reject(errors.fieldMissing());
+        if (users.hasOwnProperty(email))
+          return reject(errors.userExists(email));
 
-            if (!email || !password) return reject(errors.fieldMissing());
-            if( !users[email]) return reject("nonexistent user") // TODO
-            
-            if(users[email].password === password){
-                sessions[++sessionCounter] = {
-                    user: email,
-                    expires: new Date + 10000, // In ten seconds
-                };
-                if (rememberMe) remember[++rememberCounter] = email;
-                resolve({
-                    ...users[email],
-                    session: sessionCounter,
-                    remember: rememberCounter,
-                });
-            } else {
-                return reject("incorrect password")
-            }
-        }),
-        signinRemember: id => new Promise((resolve, reject) => {
-            if(rememberCounter[id]) return resolve(rememberCounter[id]);
-            return reject("nonexistent session")
-        }),
-        signoutRemember: id => new Promise((resolve, reject) => {
-            delete rememberCounter[id];
-            return resolve("deleted");
-        }),
-        getChatById: (id, sessionId) => new Promise((resolve, reject) => {
-            // let 
-        }),
-    }
+        users[email] = User(email, password);
+        sessions[++sessionCounter] = {
+          user: email,
+          expires: new Date() + 10000 // In ten seconds
+        };
+        if (rememberMe) remember[++rememberCounter] = email;
+        resolve({
+          ...users[email],
+          session: sessionCounter,
+          remember: rememberCounter
+        });
+      }),
+    loginPassword: (email, password, rememberMe) =>
+      new Promise((resolve, reject) => {
+        const emailRegex = /^[a-zA-Z0-9\-\_]+@[a-zA-Z0-9\-\_]+.[a-zA-Z0-9\-\_]+$/;
+
+        if (!email || !password) return reject(errors.fieldMissing());
+        if (!users[email]) return reject("nonexistent user"); // TODO
+
+        if (users[email].password === password) {
+          sessions[++sessionCounter] = {
+            user: email,
+            expires: new Date() + 10000 // In ten seconds
+          };
+          if (rememberMe) remember[++rememberCounter] = email;
+          resolve({
+            ...users[email],
+            session: sessionCounter,
+            remember: rememberCounter
+          });
+        } else {
+          return reject("incorrect password");
+        }
+      }),
+    loginRemember: id =>
+      new Promise((resolve, reject) => {
+        if (rememberCounter[id]) return resolve(rememberCounter[id]);
+        return reject("nonexistent session");
+      }),
+    signout: id =>
+      new Promise((resolve, reject) => {
+        delete rememberCounter[id];
+        return resolve("deleted");
+      }),
+    getChatById: (id, sessionId) =>
+      new Promise((resolve, reject) => {
+        // let
+      }),
+    getChats: session => new Promise((resolve, reject) => {}),
+    getChat: (session, id) => new Promise((resolve, reject) => {})
+  }
 };

@@ -1,9 +1,19 @@
-import React, { Component, useState} from 'react';
-import './App.css';
+import React, {
+  Component,
+  useState,
+  useEffect,
+  bindActionCreators
+} from "react";
+import {connect} from "react-redux";
 
+
+import './App.css';
 import sdk from "./sdk.js";
 
-import {last} from "./util.js"
+import Input from "./Components/Input.js";
+import Messages from "./Components/Messages.js";
+import Sidebar from "./Components/Sidebar.js";
+import Topnav from "./Components/Topnav.js";
 
 /*
 Todo:
@@ -27,129 +37,148 @@ Todo:
   - Onscroll load more
   - Upload files
   - Update chat on message
+
+  - Last read
 */
 
-let Sidebar = ({imgurl, chats}) => <div className="sidebar">
-  <div className="profile">
-    <img src={imgurl} alt="" className="profile-pic"/>
-  </div>
-  <div className="chats">
-    {
-      chats.length > 0 
-      ? chats.map(({title, messages}) => <div onClick={()=>{/* TODO */}} className="chat">
-        <div className="chat-title">{title}</div>
-        <div className = "chat-last-msg"> {
-          last(messages).sender
-        } : {
-          last(messages).message.text
-        } 
-        </div>
-      </div>)
-      : "It seems that you have no chats"
-    }
-  </div>
-</div>
+/*
+  Components
+    ? Modal(children)
+      @ open
+      @ close
 
-let Messages = ({currentChat}) => <div class="messages">
-    {
-      currentChat.messages.length > 0 ?
-      currentChat.messages.map(({isNotif, sender, msg, outgoing}) => {
-        if(isNotif) return <div className="info">{msg}</div>
-        return <div className={"message " + (outgoing ? "outgoing" : "incoming")}>
-          {msg}
-        </div>
-      }) :
-      "Looks like you have no messages"
-    }
-</div>;
+    ? AddChat
+      ? Modal()
+        ? Userinput
+          ! Users
 
-let Header = ({currentChat}) => <div className="header">
-  {currentChat.title}
-</div>;
+          @# Fetch user
+          @# Create chat
+          @# Generate Share url
+          @ Switch chat
+          ? Userlist
+            ! User
+              @ Del user
 
-let LoginComponent = ({login, signup}) =>{
-  let [tab, setTab] = useState(1);
-  let [info, setInfo] = useState({
-    email: null,
-    pass: null,
-    name: null,
-    rememberMe: null,
-  });
-  let createSetter = name => evt => setInfo({
-    ...info,
-    [name]: evt.target.value
-  })
-  let tabs = [
-    <div className="login">
-      <label className = "row" key="email">
-        email: < input type = "email" onChange={createSetter("email")}/>
-      </label>
-      <label className="row" key="password">
-        password: <input type="password" onChange={createSetter("pass")}/>
-      </label>
-      <label className="row" key="remember">
-        Remember Me: <input type="checkbox" name="" id="" onChange={createSetter("rememberMe")}/>
-      </label>
-      <button onClick={() => login(info)}>Login</button>
-    </div>,
-    <div className="signup">
-      <label className = "row" key="email">
-        email: < input type = "email" onChange={createSetter("email")}/>
-      </label>
-      <label className="row" key="password">
-        password: <input type="password" onChange={createSetter("pass")}/>
-      </label>
-      <label className="row" key="name">
-        name: <input type="name" onChange={createSetter("name")}/>
-      </label>
-      <label className="row" key="remember">
-        Remember Me: <input type="checkbox" name="" id="" onChange={createSetter("rememberMe")}/>
-      </label>
-      <button onClick={() => signup(info)}>Signup</button>
-    </div>
-  ];
-  return <div className="login-signup-container">
-    {tabs[tab]}
-  </div>
-}
+    ? App
+      * State:
+        ! User
+          ! Name
+          ! Session
+          ! Chatrooms
+          ! Profile pic
+        ! Session
+        ! currentChat
+        ! cached messages
+        ! Chatrooms
+
+      * Lifecycle
+
+      * Actions
+
+      * Components
+        # if(userLoggedIn)
+          ? Main
+            ? Sidebar
+              ? Profile
+                ! Main.ProfilePic
+                ! Main.UserName
+
+                @# Change Profile Pic
+                @# Change name
+              ? Chats
+                ! Main.UserChats
+
+                ? Chat[]
+                  ! Chat
+                  @ Switch Chat
+                  @# Fetch messages
+
+                ? Fab
+                  @ Show AddChat
+
+            ? Chat
+              ! CurrentChat
+
+              @# Send message
+              @# Fetch messages
+              @% Listen for messages
+
+        # else
+          ? Login/Signup
+            ? Login
+              @# Login -> Change user state | Flash message
+            ? Signup
+              @# Signup - > Change user state | Flash message
+*/
+// const LoginComponent = ({login, signup}) =>{
+//   let [tab, setTab] = useState(1);
+//   let [info, setInfo] = useState({
+//     email: null,
+//     pass: null,
+//     name: null,
+//     rememberMe: null,
+//   });
+//   let createSetter = name => evt => setInfo({
+//     ...info,
+//     [name]: evt.target.value
+//   })
+//   return <div className="login-container">
+//     <div className="login-tabs">
+//       <div className={`login-cover tab-${['login', 'signup'][tab]}`}>
+        
+//       </div>
+//       <div className="login">
+//         <button onClick={() => setTab(1)}>Signup <i className="fa fa-arrow-right"></i></button>
+//         <h3 className="login-header">login</h3>
+//         <label className = "row" key="email">
+//           email: <input type = "email" onChange={createSetter("email")}/>
+//         </label>
+//         <label className="row" key="password">
+//           password: <input type="password" onChange={createSetter("pass")}/>
+//         </label>
+//         <label className="row" key="remember">
+//           Remember Me: <input type="checkbox" name="" id="" onChange={createSetter("rememberMe")}/>
+//         </label>
+//         <button onClick={() => login(info)}>Login</button>
+//       </div>
+//       <div className="signup">
+//         <button onClick={() => setTab(0)}><i className="fa fa-arrow-left"></i> Login</button>
+//         <h3 className="login-header">signup</h3>
+//         <label className = "row" key="email">
+//           email: < input type = "email" onChange={createSetter("email")}/>
+//         </label>
+//         <label className="row" key="password">
+//           password: <input type="password" onChange={createSetter("pass")}/>
+//         </label>
+//         <label className="row" key="name">
+//           name: <input type="name" onChange={createSetter("name")}/>
+//         </label>
+//         <label className="row" key="remember">
+//           Remember Me: <input type="checkbox" name="" id="" onChange={createSetter("rememberMe")}/>
+//         </label>
+//         <button onClick={() => signup(info)}>Signup</button>
+//       </div>
+//     </div>
+//   </div>
+// }
 
 class App extends Component {
   constructor (props) {
     super(props);
-    this.state = { 
-      user: null,
-      /*
-      User:
-        {
-          name: String,
-          email: String,
-          imgUrl: String,
 
-          session: String,
-        }
-      */
-      chatrooms: [],
-      cached_messages: {},
-      currentChat: null,
-      flash: [],
-    };
+    sdk.onSessionUpdate(s => this.updateSession(s));
   }
   render() {
     console.log(this.state.flash)
     return <div className="content"> { 
         this.state.user ? <React.Fragment>
-          <Sidebar imgurl={this.state.user.imgurl} chats={this.state.chats}/>
-          <Header currentChat={this.state.currentChat}/>
-          <Messages currentChat={this.state.currentChat}/>
-          <div className="input">
-              <input type="text" name="" id="" className="text-input" placeholder=" Start typing"/>
-          </div>
-          
+          <Sidebar />
+          <Topnav />
+          <Messages />
+          <MessageInput />
         </React.Fragment> : <React.Fragment>
-            <LoginComponent 
-              login={this.loginEmailPass.bind(this)} 
-              signup={this.signupEmailPass.bind(this)}
-          />
+            {/* <LoginComponent /> */}
         </React.Fragment>
     }
     </div>
@@ -157,54 +186,14 @@ class App extends Component {
 
   componentDidMount(){
     if(localStorage.getItem("remember") == true){
-      this.signInFromRemember(localStorage.getItem("remember-token"));
+      this.loginRemember(localStorage.getItem("remember-token"));
     }
-  }
-
-  //* Network
-  signupEmailPass({email, pass, rememberMe}){
-    sdk.auth.signupEmailPass(email, pass)
-      .then(this.signupSuccess.bind(this))
-      .catch(this.signupFailure.bind(this));
-  }
-  signupSuccess(user){
-    this.setState({user});
-  }
-  signupFailure(err){
-    this.setState({flash: [...this.state.flash, err]});
-  }
-
-  loginEmailPass({email, pass, rememberMe}){
-    console.log(email, pass)
-    sdk.auth.signinEmailPass(email, pass)
-      .then(this.signinSuccess)
-      .catch(this.signinFailure);
-  }
-  loginFromRemember(token) {
-    sdk.auth.signinRemember(token)
-      .then(this.signinSuccess)
-      .catch(this.signinFailure);
-  }
-  loginSuccess(user){
-    this.setState({user});
-  }
-  loginFailure(err){
-    this.setState({flash: [...flash, err]});
-  }
-
-  sendMessage(){}
-  sendMessageSuccess(){}
-  sendMessageFailure(){}
-
-  createChat(){}
-  createChatSuccess(){}
-  createChatFailure(){}
-
-
-  //* UI
-  switchChat(){
-
   }
 }
 
-export default App;
+export default connect(
+  null,
+  dispatch => ({
+    userActions
+  })
+)(App);

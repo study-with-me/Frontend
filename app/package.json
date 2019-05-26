@@ -5,7 +5,10 @@
   "dependencies": {
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
-    "react-scripts-parcel": "0.0.38"
+    "react-redux": "^7.0.3",
+    "react-scripts-parcel": "0.0.38",
+    "redux": "^4.0.1",
+    "redux-thunk": "^2.3.0"
   },
   "scripts": {
     "start": "react-scripts-parcel start",
@@ -27,6 +30,7 @@
     ]
   },
   "devDependencies": {
-    "babel-core": "^6.26.3"
+    "babel-core": "^6.26.3",
+    "sass": "^1.20.1"
   }
 }
