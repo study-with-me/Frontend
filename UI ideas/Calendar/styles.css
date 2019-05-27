@@ -3,6 +3,10 @@
   text-align: center;
 }
 
+.calender-grid {
+  width: 50%;
+}
+
 .month-container {
   display: flex;
   justify-content: space-around;
@@ -15,8 +19,6 @@
 
 /* Month list */
 .weekdays {
-  margin: 0;
-  padding: 0;
   display: flex;
   width: 100%;
 }
@@ -28,19 +30,32 @@
 
 .grid > * {
   margin: 5px;
+  border: medium solid white;
 }
 
 .weekdays div {
   color: white;
-  font-size: 20px;
+  font-size: 13px;
   text-transform: uppercase;
-  letter-spacing: 3px;
   flex-grow: 1;
 }
 
 /* Weekdays (Mon-Sun) */
 .weekdays {
   margin: 0;
-  padding: 10px 0;
+  padding: 7px 0;
   background-color: #ddd;
+}
+
+.diffmonth {
+  color: rgb(200, 200, 200);
+}
+
+.currmonth:hover {
+  justify-content: center;
+  border-color: rgb(144, 144, 144);
+  align-items: center;
+  text-align: center;
+  display: flex;
+  cursor: pointer;
 }
