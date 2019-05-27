@@ -1,0 +1,46 @@
+.App {
+  font-family: sans-serif;
+  text-align: center;
+}
+
+.month-container {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+.month-container i {
+  min-height: 1em;
+  min-width: 1em;
+}
+
+/* Month list */
+.weekdays {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  width: 100%;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(7, auto);
+}
+
+.grid > * {
+  margin: 5px;
+}
+
+.weekdays div {
+  color: white;
+  font-size: 20px;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  flex-grow: 1;
+}
+
+/* Weekdays (Mon-Sun) */
+.weekdays {
+  margin: 0;
+  padding: 10px 0;
+  background-color: #ddd;
+}
