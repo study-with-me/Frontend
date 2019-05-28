@@ -164,7 +164,6 @@ Todo:
 class App extends Component {
   constructor (props) {
     super(props);
-
     sdk.auth.onSessionUpdate(s => this.updateSession(s));
   }
   render() {
@@ -185,6 +184,22 @@ class App extends Component {
     if(localStorage.getItem("remember")){
       this.loginRemember(localStorage.getItem("remember-token"));
     }
+    const { renewSession } = this.props.auth;
+
+    if (localStorage.getItem('isLoggedIn') === 'true') {
+      renewSession();
+    }
+  }
+  goTo(route) {
+    this.props.history.replace(`/${route}`)
+  }
+
+  login() {
+    this.props.auth.login();
+  }
+
+  logout() {
+    this.props.auth.logout();
   }
 }
 
