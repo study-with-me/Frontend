@@ -1,11 +1,9 @@
 import React, {
   Component,
-  useState,
-  useEffect,
-  bindActionCreators
 } from "react";
 import {connect} from "react-redux";
 
+import userActions from "./Actions";
 
 import './App.css';
 import sdk from "./sdk.js";
@@ -167,16 +165,15 @@ class App extends Component {
   constructor (props) {
     super(props);
 
-    sdk.onSessionUpdate(s => this.updateSession(s));
+    sdk.auth.onSessionUpdate(s => this.updateSession(s));
   }
   render() {
-    console.log(this.state.flash)
     return <div className="content"> { 
-        this.state.user ? <React.Fragment>
+        this.props.user ? <React.Fragment>
           <Sidebar />
           <Topnav />
           <Messages />
-          <MessageInput />
+          <Input />
         </React.Fragment> : <React.Fragment>
             {/* <LoginComponent /> */}
         </React.Fragment>
@@ -185,15 +182,15 @@ class App extends Component {
   }
 
   componentDidMount(){
-    if(localStorage.getItem("remember") == true){
+    if(localStorage.getItem("remember")){
       this.loginRemember(localStorage.getItem("remember-token"));
     }
   }
 }
 
 export default connect(
-  null,
+  ({user}) => user,
   dispatch => ({
-    userActions
+    ...userActions
   })
 )(App);

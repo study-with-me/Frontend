@@ -1,4 +1,4 @@
-import { auth } from "initalState";
+import { auth } from "./initialState.js";
 
 export default (state = auth, action) => ({
   ...state,

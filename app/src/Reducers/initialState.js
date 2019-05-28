@@ -5,10 +5,10 @@ export let auth = {
 export let chat = {
     chatrooms: [],
     cachedMessages: {},
-    messageQueue: {}
+    messageQueue: {},
+    currentChat: null,
 };
 export let ui = {
     flash: [],
     modal: null,
-    currentChat: null,
 };

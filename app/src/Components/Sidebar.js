@@ -1,6 +1,8 @@
 import sdk from "../sdk.js";
 import { connect } from "react-redux";
 import actions from "../Actions/index.js";
+import React, {useState, useEffect} from "react";
+
 
 let Sidebar = ({session, currentChat}) => {
   let [title, setTitle] = useState("");

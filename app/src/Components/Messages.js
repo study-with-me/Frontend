@@ -1,8 +1,9 @@
+import React from "react";
 import Message from "./Messages.js";
 import { connect } from "react-redux";
 
 let Messages = ({ chat: { cachedMessages, currentChat }, user: { email } }) => {
-  if (!currentChat) return <JoinChatComponent />;
+  // if (!currentChat) return <JoinChatComponent />;
   
   let messages = currentChat ? cachedMessages[currentChat] : null;
   if (messages.length) return "Looks like you have no messages";

@@ -1,6 +1,9 @@
-import { createRef } from "react";
+import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
-import actions from "./Actions/index.js";
+import actions from "../Actions/index.js";
+
+import sdk from "../sdk.js";
+
 
 let TopNav = ({
   chat: { currentChat },

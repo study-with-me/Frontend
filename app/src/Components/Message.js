@@ -1,3 +1,5 @@
+// import React from "react";
+
 export default ({msg, type}) => {
     let inp = msg;
     return <div>

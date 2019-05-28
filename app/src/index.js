@@ -1,10 +1,12 @@
+//https://codesandbox.io/s/31jw3
+
 import React from "react";
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
 
 import "./index.css";
 import App from "./App";
-import { userStore } from "./redux.js";
+import userStore from "./Store/index.js";
 import * as serviceWorker from "./serviceWorker";
 
 ReactDOM.render(

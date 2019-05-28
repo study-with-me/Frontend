@@ -1,26 +1,29 @@
-import sdk from "./sdk.js";
+import sdk from "../sdk.js";
+
+let a = (type, data) => ({ type, ...data });
 
 let req = func => (dispatch, getState) => (...args) => {
+  let res = func(getState(), ...args);
   let {
     name,
-    success = name + "_SUCCESS",
-    failure = name + "_FAILURE",
+    success = res.name + "_SUCCESS",
+    failure = res.name + "_FAILURE",
     t = _ => _,
     c = err => ({ err }),
     p,
     after = [],
     d = {}
-  } = func(getState(), ...args);
+  } = res;
 
   dispatch(a(name + "_REQUEST", d));
   p.then(res => dispatch(a(success, t(res))))
-    .then(res => after.forEach(f => f(dispatch, getState)))
+    .then(() => after.forEach(f => f(dispatch, getState)))
     .catch(res => dispatch(a(failure, c(res))));
 };
 
 let messageId = 0;
 
-export default actions = {
+let userActions = {
   signup: req((state, email, password, name) => ({
     name: "SIGNUP",
     t: ({ user, session }) => ({ user, session }),
@@ -31,15 +34,15 @@ export default actions = {
     name: "LOGIN_PASSWORD",
     success: "LOGIN_SUCCESS",
     failure: "LOGIN_FAILURE",
-    t: ({ session }) => ({ email, password, name, session }),
-    p: sdk.signup(email, password, name),
+    t: ({ session, name}) => ({ email, password, name, session }),
+    p: sdk.signup(email, password),
     after: [userActions.getChats()]
   })),
   loginRemember: req((state, token) => ({
     name: "LOGIN_PASSWORD",
     success: "LOGIN_SUCCESS",
     failure: "LOGIN_FAILURE",
-    t: ({ session }) => ({ email, password, name, session }),
+    t: ({ session, name}) => ({ token, name, session }),
     p: sdk.signup(token),
     after: [userActions.getChats()]
   })),
@@ -49,7 +52,7 @@ export default actions = {
       name: "SEND_MESSAGE",
       t: ({ id }) => ({ id }),
       c: ({ id, err }) => ({ id, err }),
-      p: sdk.sendMessage(session, mechat, msg), //TODO use chat and index ad msg id
+      p: sdk.sendMessage(session, chat, msg), //TODO use chat and index ad msg id
       d: { chat, msg }
     };
   }),
@@ -102,3 +105,4 @@ export default actions = {
       user: getState().user.email
     }) //TODO replace with sdk
 };
+export default userActions;

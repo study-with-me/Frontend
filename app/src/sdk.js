@@ -1,16 +1,26 @@
 let User = (email, password) => ({
     email, password, chats: []
 });
+// eslint-disable-next-line
 let Chat = (title, users) => ({
     title,
     messages: [],
-    users: users.reduce((a, user) => ({...a, [user.email]: true}), {}),
+    users: Object.fromEntries(users.map(a => [a, true])),
 })
 
-let users = {}
+let users = {};
+let chats = {};
 
-let sessions = {}
+let p = f => new Promise(f);
+
+let addUser = (email, password) => p((resolve, reject) => {
+
+});
+
+let sessions = {};
 let sessionCounter = 0;
+
+
 
 let remember = {};
 let rememberCounter = 0;
@@ -25,7 +35,7 @@ export default {
     getImgUrl: () => new Promise((resolve, reject) => resolve("asdf")),
     signup: (email, password, rememberMe) =>
       new Promise((resolve, reject) => {
-        const emailRegex = /^[a-zA-Z0-9\-\_]+@[a-zA-Z0-9\-\_]+.[a-zA-Z0-9\-\_]+$/;
+        // const emailRegex = /^[a-zA-Z0-9\-_]+@[a-zA-Z0-9\-_]+.[a-zA-Z0-9\-_]+$/;
 
         if (!email || !password) return reject(errors.fieldMissing());
         if (users.hasOwnProperty(email))
@@ -45,8 +55,6 @@ export default {
       }),
     loginPassword: (email, password, rememberMe) =>
       new Promise((resolve, reject) => {
-        const emailRegex = /^[a-zA-Z0-9\-\_]+@[a-zA-Z0-9\-\_]+.[a-zA-Z0-9\-\_]+$/;
-
         if (!email || !password) return reject(errors.fieldMissing());
         if (!users[email]) return reject("nonexistent user"); // TODO
 
@@ -80,6 +88,7 @@ export default {
         // let
       }),
     getChats: session => new Promise((resolve, reject) => {}),
-    getChat: (session, id) => new Promise((resolve, reject) => {})
+    getChat: (session, id) => new Promise((resolve, reject) => {}),
+    onSessionUpdate: cb => {},
   }
 };

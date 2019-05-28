@@ -1,6 +1,6 @@
-import {createRef} from "react";
+import React, {createRef} from "react";
 import {connect} from "react-redux";
-import actions from "./Actions/index.js";
+import actions from "../Actions/index.js";
 
 let Input = ({ currentChat, sendMessage }) => {
 
