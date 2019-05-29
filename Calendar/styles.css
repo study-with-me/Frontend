@@ -1,0 +1,135 @@
+* {
+  font-family: Arial, Helvetica, sans-serif;
+  text-align: center;
+}
+
+#root{
+  display: grid;
+  grid-template-columns: 70% auto;
+  grid-template-rows: 10% 15% auto;
+  grid-template-areas: 
+    "header header"
+    "calendar-header sidebar"
+    "calendar-grid sidebar";
+}
+
+.header{
+  grid-area: header;
+}
+.calender-header{
+  grid-area: calendar-header;
+}
+.calender-grid {
+  position: relative;
+  grid-area: calendar-grid;
+}
+.sidebar{
+  grid-area: sidebar;
+  border: 1px solid grey;
+  display: flex;
+  flex-direction: column;
+}
+.sidebar-header{
+  flex-basis: 16.6666%;
+  box-sizing: border-box;
+  padding: 1em;
+
+}
+.sidebar-content{
+  flex-grow: 1;
+  overflow: auto;
+}
+
+
+/*# Month Nav */
+.month-nav-container {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+.month-nav-container i {
+  cursor: pointer;
+  position: relative;
+  left: 0px;
+  transition: left 0.25s ease-out;
+  flex-grow: 1;
+  text-align: center;
+}
+.month-nav-container .fa-arrow-left:hover{
+  left: -1em;
+}
+.month-nav-container .fa-arrow-right:hover{
+  left: 1em;
+}
+
+/*# Weekday list */
+.weekdays {
+  margin: 0;
+  margin-bottom: 2px;
+  padding: 7px 0;
+  background-color: #bbb;
+  display: flex;
+  width: 100%;
+}
+.weekdays .weekday{
+  text-align: center;
+  color: white;
+  font-size: 1em;
+  text-transform: uppercase;
+  flex-grow: 1;
+}
+/*# Month grid  */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(7, auto);
+  grid-template-rows: repeat(6, auto);
+  /* perspective: 100px; */
+  height: 100%;
+}
+
+.day {
+  padding: 5px;
+  height: 5em;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+  position: relative;
+  box-sizing: border-box;
+}
+.day:hover{
+  background-color: rgba(0, 0, 0, 0.1);
+}
+.day.-prev-month, .day.-next-month{
+  color: #aaa;
+  background: 
+    repeating-linear-gradient(-45deg, #f0f0f0 0%, #f0f0f0 6%, #fff 6%, #fff 12%);
+}
+.day.-prev-month:hover, .day.-next-month:hover{
+  color: #aaa;
+  background: 
+    repeating-linear-gradient(-45deg, #e0e0e0 0%, #e0e0e0 6%, #eee 6%, #eee 12%);
+}
+.day-label{
+  position: absolute;
+  padding: 0.5em;
+  left: 0px;
+  top: 0px;
+  user-select: none;
+}
+.day.-selected{
+  background-color: rgba(0, 0, 0, 0.15);
+}
+
+.fab-button{
+  position: absolute;
+  bottom: 1em;
+  right: 1em;
+  background-color: tomato;
+  border-radius: 100em;
+  width: 3em;
+  height: 3em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  box-shadow: 0px 0px 10px -5px rgba(0,0,0,0.75);
+}
