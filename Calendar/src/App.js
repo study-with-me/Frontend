@@ -1,6 +1,7 @@
 import React, { Component, Fragment, useEffect } from "react";
 // import ReactDOM from "react-dom";
 import moment from "moment";
+import DateTimePicker from "react-datetime-picker";
 
 const weekdays = moment.weekdaysShort();
 const months = moment.months();
@@ -75,7 +76,8 @@ let DayCell = ({
   return (
     <div
       onClick={selected ? deselect : select}
-      className={"day -" + type + "-month" + (selected ? " -selected" : "")}>
+      className={"day -" + type + "-month" + (selected ? " -selected" : "")}
+    >
       <div className="day-label">{date}</div>
     </div>
   );
@@ -91,7 +93,11 @@ export default class Calendar extends Component {
       selection: new Set([1, 2]),
       mouse: {
         down: false
-      }
+      },
+      popUp: {
+        visibility: "hidden"
+      },
+      data: []
     };
   }
   move(dir = 0) {
@@ -125,6 +131,19 @@ export default class Calendar extends Component {
   isSelected(d) {
     return this.state.selection.has(d);
   }
+  addEvent() {
+    let name = this.refs.name.value;
+    let time = this.refs.time.value;
+    let d = Date.now();
+    let data = [...this.state.data];
+    let obj = {};
+    obj["name"] = name;
+    obj["time"] = time;
+    obj["id"] = d;
+    data.push(obj);
+    this.setState({ data });
+    document.getElementById("add-event").reset();
+  }
 
   render() {
     let { currentYear, currentMonth } = this.state;
@@ -144,7 +163,8 @@ export default class Calendar extends Component {
           <div
             className="grid"
             onMouseDown={() => this.setState({ mouse: { down: true } })}
-            onMouseUp={() => this.setState({ mouse: { down: false } })}>
+            onMouseUp={() => this.setState({ mouse: { down: false } })}
+          >
             {[...prevDays, ...curDays, ...nextDays].map(day => (
               <DayCell
                 key={`${day.type}-${day.date}`}
@@ -161,11 +181,39 @@ export default class Calendar extends Component {
               />
             ))}
           </div>
-          <div className="fab-button">+</div>
+          <div
+            className="fab-button"
+            onClick={() => this.setState({ popUp: { visibility: "visible" } })}
+          >
+            +
+          </div>
+          <div
+            className="pop-up"
+            style={{
+              visibility: this.state.popUp.visibility
+            }}
+          >
+            <form id="add-event">
+              Event Name: <input type="text" ref="name" />
+              <br />
+              <br />
+              Event Time: <DateTimePicker ref="time" />
+              <br />
+              <br />
+              <button onClick={() => this.addEvent()}>Add</button>
+            </form>
+          </div>
         </div>
         <div className="sidebar">
           <div className="sidebar-header">Todo</div>
-          <div className="sidebar-content"></div>
+          <div className="sidebar-content">
+            {this.state.data.map(item => (
+              <div id={item.id}>
+                <label>Name: {item.name} </label>
+                <label>Date: {item.time}</label>
+              </div>
+            ))}
+          </div>
         </div>
       </React.Fragment>
     );
